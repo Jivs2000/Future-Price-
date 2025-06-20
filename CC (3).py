@@ -7,7 +7,7 @@
 import streamlit as st
 import pandas as pd
 import numpy as np
-import matplotlib.pyplot as plt
+
 from sklearn.linear_model import LinearRegression
 from sklearn.model_selection import train_test_split
 
@@ -54,18 +54,7 @@ if uploaded_file:
         future_ordinals = future_dates.map(pd.Timestamp.toordinal).values.reshape(-1, 1)
         future_predictions = model.predict(future_ordinals)
 
-        # Plot
-        fig, ax = plt.subplots(figsize=(10, 5))
-        ax.plot(df['Date'], y, label='Actual Prices', color='blue')
-        ax.plot(df['Date'].iloc[len(X_train):], predictions, label='Predicted Prices (Test)', color='orange')
-        ax.plot(future_dates, future_predictions, label='Future Predictions', color='green')
-        ax.set_xlabel("Date")
-        ax.set_ylabel("Price")
-        ax.set_title("Tesla Stock Price Forecast")
-        ax.legend()
-        ax.grid(True)
-        st.pyplot(fig)
-
+     
         # Display forecast data
         forecast_df = pd.DataFrame({'Date': future_dates, 'Predicted_Price': future_predictions})
         st.subheader("📊 Forecasted Prices")
